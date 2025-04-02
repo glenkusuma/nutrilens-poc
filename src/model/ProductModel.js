@@ -1,5 +1,5 @@
 export class ProductModel {
-  baseUrl = 'https://world.openfoodfacts.org/api/v2';
+  baseUrl = 'https://id.openfoodfacts.org/api/v2/';
 
   async getProductByBarcode(barcode) {
     const res = await fetch(`${this.baseUrl}/product/${barcode}`);
@@ -15,7 +15,7 @@ export class ProductModel {
   }
 
   async getByCategory(keyword, size = 10) {
-    const url = `${this.baseUrl}/search?categories_tags=${encodeURIComponent(keyword)}&countries_tags_en=id&sort_by=scans_n&fields=code,product_name,nutrition_grades,image_front_small_url&page_size=${size}`;
+    const url = `${this.baseUrl}/search?categories_tags=${encodeURIComponent(keyword)}&countries_tags_en=id&sort_by=scans_n&page_size=${size}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error('Gagal mengambil kategori');
     return await res.json();

@@ -32,6 +32,8 @@
     "whatwg-fetch": "^3.6.20"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.17"
+    "@tailwindcss/vite": "^4.0.17",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.3"
   }
 }

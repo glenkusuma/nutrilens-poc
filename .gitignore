@@ -25,3 +25,6 @@ dist-ssr
 
 ignore/
 __snapshots__/
+*.crt
+*.key
+*.env

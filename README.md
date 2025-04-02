@@ -1,74 +1,64 @@
 # NutriLens
 
-NutriLens adalah aplikasi berbasis web untuk menelusuri dan menampilkan informasi produk makanan menggunakan data dari OpenFoodFacts API. Aplikasi ini mendukung pencarian berdasarkan barcode, kata kunci, dan kategori, serta memberikan visualisasi informasi nutrisi secara ringkas.
+NutriLens adalah aplikasi berbasis web untuk menelusuri dan menampilkan informasi produk makanan menggunakan data dari OpenFoodFacts API. Aplikasi ini mendukung pencarian berdasarkan barcode, kata kunci, dan kategori, serta memberikan visualisasi informasi nutrisi secara ringkas
 
 ## Fitur Utama
 
 - **Pencarian Produk** berdasarkan barcode, kata kunci, atau kategori.
-- **Detail Produk** yang menampilkan nama, gambar, nutri-grade, dan informasi nutrisi makro.
-- **Snapshot Testing** untuk memastikan kestabilan data dari API dan validasi field yang dibutuhkan.
-- **Integrasi langsung ke API** tanpa mock, termasuk validasi `fetch`, error handling, dan kontrak data.
-
-## Struktur Proyek
-
-```
-.
-├── index.html
-├── public/
-├── src/
-│   ├── controller/       # [TODO] logika interaksi user & view
-│   ├── view/             # [TODO] rendering komponen UI
-│   ├── model/
-│   │   └── ProductModel.js
-│   ├── style.css
-│   └── main.js
-├── __mock__/             # Berisi data snapshot dari API (optional untuk dev/test)
-├── __tests__/
-│   ├── productModel.test.js
-│   └── integration/
-│       ├── productModel.integration.test.js
-│       └── __snapshots__/
-├── babel.config.js
-├── eslint.config.js
-├── jest.config.js
-├── jest.setup.js
-├── vite.config.js
-├── prettier.config.js
-├── package.json
-└── README.md
-```
+- **Detail Produk** yang menampilkan nama, gambar, nutri-grade, dan informasi nutrisi makro
+- **Snapshot Testing** untuk memastikan kestabilan data dari API dan validasi field yang dibutuhkan
+- **Integrasi langsung ke API** tanpa mock, termasuk validasi `fetch`, error handling, dan kontrak data
 
 ## Cara Menjalankan
 
-1. Install dependency:
+1. **Gunakan `Makefile` untuk inisialisasi proyek:**
 
 ```bash
-pnpm install
+make
 ```
 
-2. Jalankan pengembangan:
+`Makefile` akan menjalankan langkah-langkah berikut:
+
+- Membuat sertifikat SSL di folder `ssl/` untuk pengembangan lokal
+- Menginstall semua dependencies menggunakan `npm install`
+- Membuat file `.env` jika belum ada
+
+### Target `Makefile` yang Tersedia
+
+- `make` atau `make all`: Menjalankan semua tugas (generate SSL, install dependencies, konfigurasi environment)
+- `make ssl`: Membuat sertifikat SSL di folder `ssl/`
+- `make install`: Menginstall semua dependencies menggunakan `npm install`
+- `make env`: Membuat file `.env` jika belum ada
+- `make clean`: Menghapus file SSL yang dihasilkan
+
+2. **Jalankan pengembangan lokal dengan SSL:**
 
 ```bash
-pnpm dev
+npm run dev -- --host --port 8080
 ```
 
-3. Tes dengan Jest:
+- **`--host`**: Mengexpose server ke jaringan lokal sehingga dapat diakses dari perangkat lain (misalnya, ponsel) menggunakan alamat IP lokal
+- **`--port 8080`**: Menentukan port untuk server pengembangan
+
+> **Catatan:** Sertifikat SSL yang dibuat oleh `Makefile` memungkinkan pengembangan lokal menggunakan HTTPS. Hal ini penting untuk menguji fitur seperti barcode scanning yang memerlukan koneksi aman (HTTPS) di browser modern
+
+3. **Tes dengan Jest:**
 
 ```bash
-pnpm test
+npm test
 ```
 
-Atau gunakan test terpisah:
+atau gunakan test terpisah:
 
 ```bash
-pnpm test:unit
-pnpm test:integration
+npm test:unit
+npm test:integration
 ```
 
-4. Format kode:
+4. **Format kode & linting:**
 
 ```bash
-pnpm format
+npm format && npm lint
 ```
 
 ## Teknologi
@@ -78,6 +68,7 @@ pnpm format
 - **Jest** - Testing framework (unit test, integration test, snapshot)
 - **ESLint + Prettier** - Linting dan format otomatis
 - **OpenFoodFacts API v2** - Sumber data produk
+- **ZXing library** - Library Barcode Scanning
 
 ## API Endpoint yang Digunakan
 
@@ -91,29 +82,6 @@ pnpm format
 
   - `GET https://world.openfoodfacts.org/api/v2/search?categories_tags=${category}&countries_tags_en=id&sort_by=scans_n&fields=code,product_name,nutrition_grades,image_front_small_url`  
     Digunakan untuk search produk berdasarkan kategori
-
-## Kontrak Data Produk
-
-Berikut adalah field yang dianggap wajib tersedia dalam objek `product`:
-
-- `product_name`: Nama produk pendek
-- `product_name_en`: Nama produk lengkap (opsional)
-- `code`: Barcode produk
-- `quantity`: Ukuran bersih
-- `nutriscore_grade`: Nilai NutriScore
-- `ecoscore_grade`: Nilai EcoScore
-- `nova_group`: Nilai NOVA score (pengolahan)
-- `image_nutrition_url`: Gambar tabel nutrisi
-- `image_packaging_url`: Gambar kemasan
-- `image_url`: Gambar utama produk
-- `ingredients_text`: Deskripsi/komposisi produk
-- `nutriments.energy-kcal_100g`: Kalori per 100g
-- `nutriments.fat_100g`: Lemak total
-- `nutriments.saturated-fat_100g`: Lemak jenuh
-- `nutriments.carbohydrates_100g`: Karbohidrat
-- `nutriments.proteins_100g`: Protein
-- `nutriments.sugars_100g`: Gula
-- `nutriments.salt_100g`: Garam
 
 ## Snapshot & Testing
 
@@ -132,9 +100,9 @@ Pengujian mencakup:
 
 ## TODO
 
-- [ ] Implementasi scanner barcode
-- [ ] UI untuk hasil pencarian kategori
-- [ ] Halaman detail produk
+- [x] Implementasi scanner barcode
+- [x] UI untuk hasil pencarian kategori
+- [x] Halaman detail produk
 - [ ] Fitur perbandingan produk (compare)
 - [ ] Menyimpan history pencarian
 
