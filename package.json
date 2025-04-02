@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
-    "test": "jest",
+    "test": "jest --",
     "test:unit": "jest __tests__",
     "test:integration": "jest __tests__/integration"
   },

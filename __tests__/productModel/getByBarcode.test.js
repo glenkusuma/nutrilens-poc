@@ -1,10 +1,10 @@
 // filepath: ./__tests__/productModel.test.js
-import { ProductModel } from '../src/model/ProductModel.js';
+import { ProductModel } from '../../src/model/ProductModel.js';
 import { readFileSync } from 'fs';
 import path from 'path';
 
 const nutellaResponse = JSON.parse(
-  readFileSync(path.resolve(__dirname, '../__mock__/nutella-ferrero.json'))
+  readFileSync(path.resolve(__dirname, '../../__mock__/nutella-ferrero.json'))
 );
 
 const requiredFields = {

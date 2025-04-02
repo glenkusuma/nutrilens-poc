@@ -14,8 +14,8 @@ export class ProductModel {
     return await res.json();
   }
 
-  async getByCategory(category, size = 10) {
-    const url = `${this.baseUrl}/search?categories_tags=${encodeURIComponent(category)}&countries_tags_en=id&sort_by=scans_n&fields=code,product_name,nutrition_grades,image_front_small_url&page_size=${size}`;
+  async getByCategory(keyword, size = 10) {
+    const url = `${this.baseUrl}/search?categories_tags=${encodeURIComponent(keyword)}&countries_tags_en=id&sort_by=scans_n&fields=code,product_name,nutrition_grades,image_front_small_url&page_size=${size}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error('Gagal mengambil kategori');
     return await res.json();

@@ -1,4 +1,4 @@
-import { ProductModel } from '../../src/model/ProductModel.js';
+import { ProductModel } from '../../../src/model/ProductModel.js';
 
 const requiredFields = {
   'product.product_name': 'Nama produk',
@@ -21,10 +21,10 @@ const requiredFields = {
   'product.nutriments.salt_100g': 'Garam',
 };
 
-describe('[INTEGRATION] ProductModel API', () => {
+describe('[INTEGRATION] ProductModel.getProductByBarcode API', () => {
   let model;
 
-  beforeEach(() => {
+  beforeAll(() => {
     model = new ProductModel();
   });
 
