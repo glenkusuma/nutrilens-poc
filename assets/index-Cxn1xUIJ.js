@@ -278,7 +278,6 @@ var Kr=Object.defineProperty;var qr=(r,e,t)=>e in r?Kr(r,e,{enumerable:!0,config
   </button>
   <h1 class="pl-4 text-2xl font-bold">Detail Produk</h1>
 </div>
-<p class="mb-4 text-gray-600">Berikut detail lengkap produk yang Anda pilih.</p>
 `):r.type==="scan"&&(be.classList.add("top-0"),be.innerHTML=`<div class="flex items-center mb-4">
   <button
     onclick="popState()"
@@ -303,7 +302,7 @@ var Kr=Object.defineProperty;var qr=(r,e,t)=>e in r?Kr(r,e,{enumerable:!0,config
   <h1 class="pl-4 text-2xl font-bold">Scan Barcode</h1>
 </div>
 <p class="mb-4 text-gray-600">
-  Gunakan kamera Anda untuk memindai barcode produk.
+  Gunakan kamera kamu untuk memindai barcode produk.
 </p>
 `)}function Wo(){Ie.pop();const r=Ie[Ie.length-1]||{type:"home"};let e="";r.type==="search"?e=`#/search?q=${encodeURIComponent(r.q)}`:r.type==="category"?e=`#/category?c=${encodeURIComponent(r.c)}`:r.type==="detail"?e=`#/detail/${r.barcode}`:r.type==="scan"?e="#/scan":e="#/",window.location.hash=e}window.popState=Wo;function zo(){qt.innerHTML=`
     <div class="relative flex flex-col items-center w-full max-w-md mx-auto">
