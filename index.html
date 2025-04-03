@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NutriLens Mobile</title>
+    <link rel="icon" href="/vite.svg" type="image/svg+xml" />
+    <!-- Force mobile-ish viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CSS via CDN -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <!-- ZXing library untuk scanning barcode -->
+    <!-- <script src="https://unpkg.com/@zxing/library@latest"></script> -->
+    <script type="module" crossorigin src="/nutrilens-poc/assets/index-CE-DChLy.js"></script>
+    <link rel="stylesheet" crossorigin href="/nutrilens-poc/assets/index-CmquW0Hm.css">
+  </head>
+  <body
+    class="bg-gray-50 text-gray-800 min-h-screen flex flex-col max-w-md mx-auto relative border-l border-r border-gray-300"
+  >
+    <header
+      id="header"
+      class="sticky bg-white border-b border-gray-200 p-4 border-l"
+    ></header>
+
+    <!-- Main Content -->
+    <main id="content" class="flex-grow overflow-y-auto pb-20 p-4">
+      <!-- pb-20 agar tidak ketutupan nav bottom -->
+      Silakan gunakan form pencarian atau pilih kategori di atas.
+    </main>
+
+    <!-- Bottom Nav Bar (centered) -->
+    <nav
+      id="bottomNav"
+      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50 bg-white border-t border-gray-300 h-16 flex justify-around items-center w-full max-w-md border-l-[1px] border-r-[1px]"
+    >
+      <!-- Home Button -->
+      <a
+        href="#/"
+        class="flex flex-col items-center justify-center text-gray-700 border-r border-gray-300 flex-1"
+        onclick="updateActiveState()"
+      >
+        <svg
+          id="homeIcon"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            id="Icon"
+            d="M18.8866 9.46847L17.245 7.82879L10.7039 1.28835C10.5191 1.10372 10.2684 1 10.007 1C9.74564 1 9.49496 1.10372 9.31013 1.28835L2.75919 7.82457L1.11336 9.46847C0.958289 9.6347 0.962864 9.89373 1.12371 10.0544C1.28455 10.215 1.54389 10.2196 1.71031 10.0647L2.6353 9.14082V18.0156C2.6353 18.5593 3.07653 19 3.62082 19H7.46579C8.01008 19 8.45131 18.5593 8.45131 18.0156V12.3907C8.45131 12.313 8.51435 12.25 8.5921 12.25H11.4079C11.4857 12.25 11.5487 12.313 11.5487 12.3907V18.0156C11.5487 18.5593 11.9899 19 12.5342 19H16.3834C16.6448 19 16.8955 18.8963 17.0803 18.7117C17.2651 18.5271 17.3689 18.2767 17.3689 18.0156V9.14504L18.2897 10.0647C18.4561 10.2196 18.7154 10.215 18.8763 10.0544C19.0371 9.89373 19.0417 9.6347 18.8866 9.46847Z"
+            class="stroke-black"
+            stroke-width="2"
+          />
+        </svg>
+        <span class="text-xs">Home</span>
+      </a>
+
+      <!-- Scan Button -->
+      <a
+        href="#/scan"
+        class="flex flex-col items-center justify-center text-gray-700 flex-1"
+        onclick="updateActiveState()"
+      >
+        <svg
+          id="scanIcon"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M15.7634 5.35265H17.6958V0.521729H0.304447V5.35265H2.23681V2.4541H15.7634V5.35265ZM0.304443 8.2512H17.6957V10.1836H0.304443V8.2512ZM17.6957 13.0821V17.9131H0.304443V13.0821H2.23681V15.9807H15.7634V13.0821H17.6957Z"
+            class="fill-black"
+          />
+        </svg>
+        <span class="text-xs">Scan</span>
+      </a>
+    </nav>
+
+    <script>
+      function updateActiveState() {
+        const hash = window.location.hash || '#/';
+        const homeIcon = document
+          .getElementById('homeIcon')
+          .querySelector('path');
+        const scanIcon = document
+          .getElementById('scanIcon')
+          .querySelector('path');
+
+        if (hash === '#/') {
+          homeIcon.classList.remove('stroke-grey-900', 'fill-none`');
+          homeIcon.classList.add('stroke-green-500', 'fill-green-500');
+          scanIcon.classList.remove('stroke-green-500', 'fill-green-500');
+          scanIcon.classList.add('stroke-grey-900', 'fill-black');
+        } else if (hash === '#/scan') {
+          scanIcon.classList.remove('stroke-grey-900', 'fill-none');
+          scanIcon.classList.add('stroke-green-500', 'fill-green-500');
+          homeIcon.classList.remove('stroke-green-500', 'fill-green-500');
+          homeIcon.classList.add('stroke-grey-900', 'fill-none');
+        }
+      }
+
+      window.addEventListener('hashchange', updateActiveState);
+      window.addEventListener('load', updateActiveState);
+    </script>
+
+    <!-- Main JS entry -->
+  </body>
+</html>
