@@ -25,4 +25,5 @@ export default defineConfig({
     host: true, // Allows access on local network
     https: getHttpsConfig(), // Conditionally set HTTPS config
   },
+  base: "/nutrilens-poc/"
 });

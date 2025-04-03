@@ -171,7 +171,6 @@ function setHeader(state) {
   </button>
   <h1 class="pl-4 text-2xl font-bold">Detail Produk</h1>
 </div>
-<p class="mb-4 text-gray-600">Berikut detail lengkap produk yang Anda pilih.</p>
 `;
   } else if (state.type === 'scan') {
     headerEl.classList.add(`top-0`);
@@ -199,7 +198,7 @@ function setHeader(state) {
   <h1 class="pl-4 text-2xl font-bold">Scan Barcode</h1>
 </div>
 <p class="mb-4 text-gray-600">
-  Gunakan kamera Anda untuk memindai barcode produk.
+  Gunakan kamera kamu untuk memindai barcode produk.
 </p>
 `;
   }

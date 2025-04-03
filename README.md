@@ -2,6 +2,10 @@
 
 NutriLens adalah aplikasi berbasis web untuk menelusuri dan menampilkan informasi produk makanan menggunakan data dari OpenFoodFacts API. Aplikasi ini mendukung pencarian berdasarkan barcode, kata kunci, dan kategori, serta memberikan visualisasi informasi nutrisi secara ringkas
 
+Aplikasi NutriLens dapat diakses melalui link berikut:
+
+[https://glenkusuma.github.io/nutrilens-poc/](https://glenkusuma.github.io/nutrilens-poc/)
+
 ## Fitur Utama
 
 - **Pencarian Produk** berdasarkan barcode, kata kunci, atau kategori.
