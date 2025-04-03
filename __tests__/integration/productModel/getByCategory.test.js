@@ -6,12 +6,12 @@ describe('[INTEGRATION] ProductModel.getByCategory', () => {
   let productModel;
 
   beforeAll(() => {
-    // Membuat instance ProductModel
+    // membuat instance ProductModel
     productModel = new ProductModel();
   });
 
   const validateProduct = (product) => {
-    // Field wajib
+    // field wajib
     expect(product).toHaveProperty('code');
     expect(typeof product.code).toBe('string');
     expect(product.code.length === 8 || product.code.length === 13).toBe(true);
@@ -102,7 +102,7 @@ describe('[INTEGRATION] ProductModel.getByCategory', () => {
     const response = await productModel.getByCategory(keyword);
     const products = response.products || [];
 
-    // Cari produk yang tidak memiliki properti "image_front_small_url"
+    // cari produk yang tidak memiliki properti "image_front_small_url"
     const productWithoutImage = products.find(
       (product) => !product.hasOwnProperty('image_front_small_url')
     );

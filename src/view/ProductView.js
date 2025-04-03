@@ -4,7 +4,7 @@ export class ProductView {
     this.app = rootElement;
   }
 
-  // Helper untuk mendapatkan URL gambar Nutri‑Score (v2)
+  // helper untuk mendapatkan URL gambar Nutri‑Score (v2)
   getNutriScoreImage(grade) {
     if (!grade)
       return 'https://static.openfoodfacts.org/images/attributes/dist/nutriscore-unknown-new-en.svg';
@@ -22,7 +22,7 @@ export class ProductView {
     );
   }
 
-  // Helper untuk mendapatkan URL gambar EcoScore
+  // helper untuk mendapatkan URL gambar EcoScore
   getEcoScoreImage(grade) {
     if (!grade)
       return 'https://static.openfoodfacts.org/images/attributes/dist/green-score-unknown.svg';
@@ -41,7 +41,7 @@ export class ProductView {
     );
   }
 
-  // Helper untuk mendapatkan URL gambar NovaGroup
+  // helper untuk mendapatkan URL gambar NovaGroup
   getNovaGroupImage(group) {
     if (!group)
       return 'https://static.openfoodfacts.org/images/attributes/dist/nova-group-unknown.svg';
@@ -63,14 +63,15 @@ export class ProductView {
    * @param {string} type - "query" or "category" or something else to describe the search
    */
   renderSearchResults(products, type) {
-    let html = `
-      <h1 class="text-2xl font-bold mb-4">Hasil Pencarian (${type})</h1>
-    `;
+    let html = /*HTML*/ `<div id="searchQuery" class="sticky top-0 z-10 p-2 shadow"></div>
+<h1 class="text-2xl font-bold mb-4">Hasil Pencarian (${type})</h1>
+`;
     products.forEach((item) => {
       const productName = item.product_name || 'Produk tanpa nama';
       const code = item.code || 'N/A';
       const image =
-        item.image_front_small_url || 'https://via.placeholder.com/64x64';
+        item.image_front_small_url ||
+        'https://placehold.co/300x200?text=Gambar+Tidak+Tersedia';
       const nutritionGrade = item.nutrition_grades
         ? item.nutrition_grades.toUpperCase()
         : 'N/A';
@@ -94,7 +95,7 @@ export class ProductView {
   }
 
   renderProductCard(product) {
-    // Ambil field-field utama dengan fallback value
+    // ambil field-field utama dengan fallback value
     const {
       product_name = 'N/A',
       product_name_en = '',
@@ -105,12 +106,12 @@ export class ProductView {
       nova_group,
       ingredients_text = '',
       categories = '',
-      categories_hierarchy = '',
-      vitamins_tags = '',
+      categories_hierarchy = ['N/A'],
+      vitamins_tags = ['N/A'],
       nutriments = {},
     } = product;
 
-    // Nutriments
+    // nutriments
     const energy = nutriments['energy-kcal_100g'] || 'N/A';
     const fat = nutriments['fat_100g'] || 'N/A';
     const satFat = nutriments['saturated-fat_100g'] || 'N/A';
@@ -119,9 +120,9 @@ export class ProductView {
     const sugars = nutriments['sugars_100g'] || 'N/A';
     const salt = nutriments['salt_100g'] || 'N/A';
 
-    // Gambar utama & gambar tambahan
+    // gambar utama & gambar tambahan
     const {
-      image_url = 'https://via.placeholder.com/300x300',
+      image_url = 'https://placehold.co/300x200?text=Gambar+Tidak+Tersedia',
       image_front_small_url = '',
       image_front_thumb_url = '',
       image_front_url = '',
@@ -134,91 +135,96 @@ export class ProductView {
       image_thumb_url = '',
     } = product;
 
-    // Tentukan URL gambar untuk NutriScore, EcoScore, dan NovaGroup
+    // tentukan URL gambar untuk NutriScore, EcoScore, dan NovaGroup
     const nutriScoreImage = this.getNutriScoreImage(nutriscore_grade);
     const ecoScoreImage = this.getEcoScoreImage(ecoscore_grade);
     const novaGroupImage = this.getNovaGroupImage(nova_group);
 
-    // Pastikan bahwa categories_hierarchy dan vitamins_tags adalah array
+    // pastikan bahwa categories_hierarchy dan vitamins_tags adalah array
     const categoriesArray = Array.isArray(categories_hierarchy)
       ? categories_hierarchy
       : [];
     const vitaminsArray = Array.isArray(vitamins_tags) ? vitamins_tags : [];
 
-    this.app.innerHTML = `
-        <section class="bg-gray-50 py-8 antialiased md:py-12">
-          <div class="mx-auto max-w-xl px-4">
-            <div class="rounded-lg border border-gray-200 bg-white p-6 shadow">
-              <!-- Product Main Image -->
-              <div class="flex justify-center mb-4">
-                <img src="${image_url}" alt="${product_name}" class="h-96 w-auto object-contain">
-              </div>
-              <!-- Product Title & Basic Info -->
-              <h1 class="text-2xl font-bold text-gray-800 mb-1">${product_name}</h1>
-              <p class="text-gray-600 mb-2">${product_name_en}</p>
-              <p class="text-sm text-gray-500 mb-4">Barcode: ${code} | Netsize: ${quantity}</p>
-              
-              <!-- Score Images -->
-              <div class="flex items-center space-x-4 mb-4">
-                <div class="flex flex-col items-center">
-                  <img src="${nutriScoreImage}" alt="NutriScore" class="h-12 w-auto">
-                  <span class="text-sm text-gray-600">NutriScore</span>
-                </div>
-                <div class="flex flex-col items-center">
-                  <img src="${ecoScoreImage}" alt="EcoScore" class="h-12 w-auto">
-                  <span class="text-sm text-gray-600">EcoScore</span>
-                </div>
-                <div class="flex flex-col items-center">
-                  <img src="${novaGroupImage}" alt="NovaGroup" class="h-12 w-auto">
-                  <span class="text-sm text-gray-600">NovaGroup</span>
-                </div>
-              </div>
-              
-              <!-- Nutritional Information -->
-              <div class="mb-4">
-                <h2 class="font-semibold text-gray-800 mb-2">Nutritional Information</h2>
-                <ul class="text-sm text-gray-600 space-y-1">
-                  <li>Kalori: ${energy} kcal</li>
-                  <li>Total Fat: ${fat} g</li>
-                  <li>Saturated Fat: ${satFat} g</li>
-                  <li>Carbohidrat: ${carbs} g</li>
-                  <li>Protein: ${protein} g</li>
-                  <li>Gula: ${sugars} g</li>
-                  <li>Garam: ${salt} g</li>
-                </ul>
-              </div>
-              
-              <!-- Ingredients -->
-              <div class="mb-4">
-                <h2 class="font-semibold text-gray-800 mb-2">Komposisi Produk</h2>
-                <p class="text-sm text-gray-600">${ingredients_text.split('.').join('.</br>')}</p>
-              </div>
-              
-              <!-- Additional Details -->
-              <div class="mb-4">
-                <h2 class="font-semibold text-gray-800 mb-2">Informasi Lainnya</h2>
-                <ul class="text-sm text-gray-600 space-y-1">
-                  <li><strong>Kategori:</strong> 
-                    <ul>
-                      ${categoriesArray.map((category) => `<li>${category}</li>`).join('')}
-                    </ul>
-                  </li>
-                  <li><strong>Vitamins Tags:</strong> 
-                    <ul>
-                      ${vitaminsArray.map((vitamin) => `<li>${vitamin}</li>`).join('')}
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+    this.app.innerHTML = /*HTML*/ `
+    <section class="pb-16"> <!-- pakai padding bottom agar tidak ketutupan nav -->
+    <div class="mb-4 flex justify-center bg-white">
+      <img
+        src="${image_url}"
+        alt="${product_name}"
+        class="w-full h-auto object-contain"
+      />
+    </div>
+    <div class="px-2">
+      <!-- nama dan info dasar -->
+      <h1 class="text-xl font-bold mb-1">${product_name}</h1>
+      <p class="text-gray-600 mb-2">${product_name_en}</p>
+      <p class="text-sm text-gray-500 mb-4">
+        Barcode: ${code} | Netsize: ${quantity}
+      </p>
+
+      <!-- skor2 -->
+      <div class="flex items-center space-x-4 mb-4">
+        <div class="flex flex-col items-center">
+          <img src="${nutriScoreImage}" alt="NutriScore" class="h-12 w-auto">
+          <span class="text-sm text-gray-600">NutriScore</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="${ecoScoreImage}" alt="EcoScore" class="h-12 w-auto">
+          <span class="text-sm text-gray-600">EcoScore</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="${novaGroupImage}" alt="NovaGroup" class="h-12 w-auto">
+          <span class="text-sm text-gray-600">NovaGroup</span>
+        </div>
+      </div>
+
+      <!-- informasi Gizi -->
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-2">Nutritional Information</h2>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>Kalori: ${energy} kcal</li>
+          <li>Total Fat: ${fat} g</li>
+          <li>Saturated Fat: ${satFat} g</li>
+          <li>Carbohidrat: ${carbs} g</li>
+          <li>Protein: ${protein} g</li>
+          <li>Gula: ${sugars} g</li>
+          <li>Garam: ${salt} g</li>
+        </ul>
+      </div>
+
+      <!-- komposisi -->
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-2">Komposisi Produk</h2>
+        <p class="text-sm text-gray-600">
+          ${ingredients_text.split('.').join('.</br>')}
+        </p>
+      </div>
+
+      <!-- info lainnya -->
+      <div>
+        <h2 class="font-semibold text-gray-800 mb-2">Informasi Lainnya</h2>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li><strong>Kategori:</strong>
+            <ul>
+              ${categories_hierarchy.map((cat) => `<li>${cat}</li>`).join('')}
+            </ul>
+          </li>
+          <li><strong>Vitamins Tags:</strong>
+            <ul>
+              ${vitamins_tags.map((vit) => `<li>${vit}</li>`).join('')}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
       `;
   }
 
   /**
-   * Render daftar hasil pencarian dengan card layout.
-   * Setiap card menggunakan standar ukuran (misal "w-80") dan gambar produk ditampilkan dengan "object-contain" agar fit.
+   * render daftar hasil pencarian dengan card layout
+   * setiap card menggunakan standar ukuran (misal "w-80") dan gambar produk ditampilkan dengan "object-contain" agar fit.
    */
   renderSearchResults(products) {
     if (!products || products.length === 0) {
@@ -250,8 +256,8 @@ export class ProductView {
       const ecoImg = this.getEcoScoreImage(ecoscore_grade);
       const novaImg = this.getNovaGroupImage(nova_groups);
 
-      html += `
-        <div class="w-92 bg-white border border-gray-200 rounded-lg shadow overflow-hidden flex flex-col">
+      html += /*HTML*/ `
+        <div class="w-md bg-white border border-gray-200 rounded-lg shadow overflow-hidden flex flex-col">
           <a href="#/detail/${code}">
             <img class="rounded-t-lg w-full h-48 object-cover" src="${image}" alt="${product_name}" />
           </a>
@@ -270,7 +276,7 @@ export class ProductView {
               <img src="${ecoImg}" alt="EcoScore" class="h-8 w-auto" />
               <img src="${novaImg}" alt="NovaGroup" class="h-8 w-auto" />
             </div>
-            <a href="#/detail/${code}" class="mt-auto inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <a href="#/detail/${code}" class="mt-auto inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
               Lihat Detail
               <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -284,8 +290,90 @@ export class ProductView {
     this.app.innerHTML = html;
   }
 
-  
   renderError(message) {
     this.app.innerHTML = `<p class="text-red-500 text-center">Error: ${message}</p>`;
+  }
+
+  renderSkeleton(count = 6) {
+    let skeletonHTML = '<div class="flex flex-wrap gap-4">';
+    for (let i = 0; i < count; i++) {
+      skeletonHTML += /*HTML*/ `
+        <div class="w-md bg-gray-200 border border-gray-300 rounded-lg shadow overflow-hidden flex flex-col animate-pulse">
+          <div class="h-48 bg-gray-300"></div>
+          <div class="p-5 flex flex-col flex-1">
+            <div class="h-6 bg-gray-300 rounded mb-2"></div>
+            <div class="h-4 bg-gray-300 rounded mb-1"></div>
+            <div class="h-4 bg-gray-300 rounded mb-1"></div>
+            <div class="h-4 bg-gray-300 rounded mb-3"></div>
+            <div class="mt-auto h-8 bg-gray-300 rounded"></div>
+          </div>
+        </div>
+      `;
+    }
+    skeletonHTML += '</div>';
+    this.app.innerHTML = skeletonHTML;
+  }
+
+  renderProductCardSkeleton() {
+    this.app.innerHTML = /*HTML*/ `      <section class="pb-16"> <!-- pakai padding bottom agar tidak ketutupan nav -->
+        <div class="mb-4 flex justify-center bg-gray-200">
+          <div class="w-full h-64 bg-gray-300"></div>
+        </div>
+        <div class="px-2">
+          <!-- nama dan info dasar -->
+          <div class="h-6 bg-gray-300 mb-2"></div>
+          <div class="h-4 bg-gray-300 rounded mb-2"></div>
+          <div class="h-4 bg-gray-300 rounded mb-4"></div>
+
+          <!-- skor2 -->
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex flex-col items-center">
+              <div class="h-12 w-12 bg-gray-300"></div>
+              <div class="h-4 bg-gray-300 rounded mt-2 w-16"></div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="h-12 w-12 bg-gray-300"></div>
+              <div class="h-4 bg-gray-300 rounded mt-2 w-16"></div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="h-12 w-12 bg-gray-300"></div>
+              <div class="h-4 bg-gray-300 rounded mt-2 w-16"></div>
+            </div>
+          </div>
+
+          <!-- informasi Gizi -->
+          <div class="mb-4">
+            <div class="h-5 bg-gray-300 rounded mb-2 w-48"></div>
+            <ul class="space-y-1">
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+            </ul>
+          </div>
+
+          <!-- Komposisi -->
+          <div class="mb-4">
+            <div class="h-5 bg-gray-300 rounded mb-2 w-48"></div>
+            <div class="h-4 bg-gray-300 rounded"></div>
+            <div class="h-4 bg-gray-300 rounded"></div>
+            <div class="h-4 bg-gray-300 rounded"></div>
+          </div>
+
+          <!-- Info lainnya -->
+          <div>
+            <div class="h-5 bg-gray-300 rounded mb-2 w-48"></div>
+            <ul class="space-y-1">
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+              <li class="h-4 bg-gray-300 rounded"></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    `;
   }
 }

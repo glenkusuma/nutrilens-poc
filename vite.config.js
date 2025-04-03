@@ -20,7 +20,7 @@ function getHttpsConfig() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(),],
   server: {
     host: true, // Allows access on local network
     https: getHttpsConfig(), // Conditionally set HTTPS config

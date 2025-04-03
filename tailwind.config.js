@@ -1,5 +1,10 @@
 tailwind.config = {
   darkMode: 'class',
+  content: [
+    './index.html', // Include your HTML file
+    './src/**/*.js', // Include all JavaScript files in the src folder
+  ],
+  safelist: ['-top-64', 'top-0'],
   theme: {
     extend: {
       colors: {
@@ -16,6 +21,7 @@ tailwind.config = {
           900: '#0f172a',
           950: '#020617',
         },
+        primaryGreen: '#35CC8C',
       },
     },
     fontFamily: {

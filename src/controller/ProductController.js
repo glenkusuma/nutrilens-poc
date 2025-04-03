@@ -9,6 +9,8 @@ export class ProductController {
 
   async showProductDetail(barcode) {
     try {
+      this.view.renderProductCardSkeleton();
+
       const data = await this.model.getProductByBarcode(barcode);
       this.view.renderProductCard(data.product);
     } catch (err) {
@@ -22,7 +24,9 @@ export class ProductController {
       if (data.hits && data.hits.length > 0) {
         this.view.renderSearchResults(data.hits);
       } else {
-        this.view.renderError(`Produk tidak ditemukan untuk kata kunci '${query}'.`);
+        this.view.renderError(
+          `Produk tidak ditemukan untuk kata kunci '${query}'.`
+        );
       }
     } catch (err) {
       this.view.renderError(err.message);
@@ -36,7 +40,9 @@ export class ProductController {
       if (products.length > 0) {
         this.view.renderSearchResults(products);
       } else {
-        this.view.renderError(`Produk tidak ditemukan untuk kategori '${category}'.`);
+        this.view.renderError(
+          `Produk tidak ditemukan untuk kategori '${category}'.`
+        );
       }
     } catch (err) {
       this.view.renderError(err.message);

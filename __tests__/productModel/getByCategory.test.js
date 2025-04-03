@@ -12,7 +12,7 @@ describe('ProductModel.getByCategory with Sanpshots', () => {
   it('should return a valid snapshot response for keyword "chocolate"', async () => {
     const keyword = 'chocolate';
     const response = await productModel.getByCategory(keyword);
-    // Snapshot seluruh response (object yang dikembalikan API)
+    // snapshot seluruh response (object yang dikembalikan API)
     expect(response).toMatchSnapshot('chocolate category response');
   });
 
@@ -34,9 +34,9 @@ describe('ProductModel.getByCategory with Sanpshots', () => {
     expect(response).toMatchSnapshot('snacks category response');
   });
 
-  // Jika input kosong dianggap tidak valid, sebaiknya kita tangkap error-nya.
-  // Namun, berdasarkan implementasi saat ini, getByCategory tidak melempar error untuk string kosong.
-  // Agar mudah debug, kita snapshot response untuk input kosong.
+  // jika input kosong dianggap tidak valid, sebaiknya kita tangkap error-nya.
+  // namun, berdasarkan implementasi saat ini, getByCategory tidak melempar error untuk string kosong.
+  // agar mudah debug, kita snapshot response untuk input kosong.
   it('should return a valid snapshot response for an empty string keyword', async () => {
     const keyword = '';
     const response = await productModel.getByCategory(keyword);
