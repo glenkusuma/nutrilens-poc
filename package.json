@@ -1,7 +1,7 @@
 {
   "name": "nutrilens-poc",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://glenkusuma.github.io/nutrilens-poc/",
   "type": "module",
   "scripts": {
